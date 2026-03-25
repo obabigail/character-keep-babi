@@ -3,6 +3,12 @@ import streamlit as st
 from .tabs import dnd_name, dnd_class, dnd_background, dnd_race, dnd_equipment, dnd_stats, dnd_traits, dnd_misc
 
 def render_page() -> None:
+
+    st.set_page_config(
+        page_title="DnD Keep",
+        page_icon=":material_dragon:",
+    )
+    
     """Renderiza a Page Configurações do Projeto."""
     st.title("DnD Keep")
 
