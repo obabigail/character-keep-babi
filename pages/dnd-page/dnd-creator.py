@@ -1,46 +1,43 @@
 import streamlit as st
+from PIL import Image
 
-from .tabs import dnd_name, dnd_class, dnd_background, dnd_race, dnd_equipment, dnd_stats, dnd_traits, dnd_misc
-
-def render_page() -> None:
-
-    st.set_page_config(
+st.set_page_config(
         page_title="DnD Keep",
-        page_icon=":material_dragon:",
+        page_icon=":material/casino:",
     )
     
-    """Renderiza a Page Configurações do Projeto."""
-    st.title("DnD Keep")
+st.title("DnD Keep")
 
-    tab_labels = [
-        "Name",
-        "Class",
-        "Background",
-        "Race",
-        "Equipment",
-        "Stats",
-        "Traits",
-        "Miscellaneous",
-    ]
-    tabs = st.tabs(tab_labels)
+dnd_name, dnd_class, dnd_background, dnd_race, dnd_equipment, dnd_stats, dnd_traits, dnd_misc = st.tabs([
+    "Name",
+    "Class",
+    "Background",
+    "Race",
+    "Equipment",
+    "Stats",
+    "Traits",
+    "Miscelaneous"]
+)
 
-    with tabs[0]:
-        dnd_name.render()
+with dnd_name:
+    st.header("Who is it?")
+    st.subheader("Tell us your heroe's name!")
+    st.caption("In the meantime, why not show their face as well? :)")
 
-    with tabs[1]:
-        dnd_class.render()
+    character_name = st.text_input(placeholder="I am the mighty...", label="Identify yourself!")
+    character_profile = st.file_uploader("I look into the mirror...", type=["png", "jpg", "jpeg", "gif", "webp"])
 
-    with tabs[2]:
-        dnd_background.render()
+    if character_profile is not None:
+        image = Image.open(character_profile)
 
-    with tabs[3]:
-        dnd_equipment.render()
+        if image is not None:
+            if image.format == "GIF":
+                st.write("It's a GIF!")
+            else:
+                st.write(f"Image format: {image.format}")
+    else:
+        st.info("no file")
 
-    with tabs[4]:
-        dnd_stats.render()
-
-    with tabs[5]:
-        dnd_traits.render()
-
-    with tabs[6]:
-        dnd_misc.render()
+    st.markdown(f"# I am the mighty :rainbow[{character_name}]!")
+    if character_profile is not None:
+        st.image(character_profile, width=500)
